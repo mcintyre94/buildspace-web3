@@ -6,7 +6,7 @@ async function main() {
     console.log("Account balance: ", balance);
 
     const Token = await ethers.getContractFactory("WavePortal");
-    const token = await Token.deploy();
+    const token = await Token.deploy({value: ethers.utils.parseEther("0.1")});
     await token.deployed();
 
     console.log("WavePortal address: ", token.address);
