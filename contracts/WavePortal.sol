@@ -8,36 +8,33 @@ contract WavePortal {
     uint totalWaves;
     address[] wavers;
 
-    constructor() {
-        // console.log("I'm a contract. I was pretty smart already But now I'm really really smart Very very smart");
-    }
+    event NewWave(address indexed from, uint timestamp, string message);
 
-    function waverExists(address sender) view public returns (bool) {
+    struct Wave {
         address waver;
-        for(uint i=0; i<wavers.length; i++) {
-            waver = wavers[i];
-            if(waver == sender) {
-                return true;
-            }
-        }
-        return false;
+        string message;
+        uint timestamp;
     }
 
-    function wave() public {
+    Wave[] waves;
+
+    constructor() {
+        console.log("Contract starting!");
+    }
+
+    function wave(string memory _message) public {
         address sender = msg.sender;
         totalWaves += 1;
+        console.log("%s waved w/ message %s", sender, _message);
+        waves.push(Wave(msg.sender, _message, block.timestamp));
+        emit NewWave(msg.sender, block.timestamp, _message);
+    }
 
-        if(!waverExists(sender)) {
-            wavers.push(sender);
-            console.log("%s has waved for the first time!", sender);
-        } else {
-            console.log("%s has waved again!", sender);
-        }  
+    function getAllWaves() view public returns (Wave[] memory) {
+        return waves;
     }
 
     function getTotalWaves() view public returns (uint) {
-        console.log("We have %d total waves", totalWaves);
-        console.log("Waved by %d unique wavers", wavers.length);
         return totalWaves;
     }
 }
