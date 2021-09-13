@@ -24,7 +24,7 @@ contract WavePortal {
         console.log("Contract starting!");
     }
 
-    function wave(string memory _message) public {
+    function wave(string memory _message) public payable {
         address sender = msg.sender;
         require(lastWavedAt[sender] + 15 minutes < block.timestamp, "You must wait 15 minutes between waves!");
         lastWavedAt[sender] = block.timestamp;

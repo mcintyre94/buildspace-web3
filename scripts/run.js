@@ -12,7 +12,7 @@ async function main() {
     let waveCount = await waveContract.getTotalWaves();
     console.log("Wave count: ", waveCount.toNumber());
 
-    let waveTxn = await waveContract.wave("A message!");
+    let waveTxn = await waveContract.wave("A message!", {value: ethers.BigNumber.from("1000000000000")});
     await waveTxn.wait();
 
     waveTxn = await waveContract.connect(randoPerson).wave("Another message!");
